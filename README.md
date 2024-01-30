@@ -2,7 +2,7 @@
 The Hotel Management System is a simple yet powerful application designed to streamline hotel operations, manage bookings, and maintain customer records efficiently. This system provides hotel administrators with tools to manage room bookings, track customer information, and generate reports for analysis.
 
 # Features:
-# Booking Management:
+## Booking Management:
 Allows hotel staff to book rooms for customers, specify check-in and check-out dates, and calculate booking fares automatically.
 
 # Customer Record Management: 
