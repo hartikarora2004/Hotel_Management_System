@@ -102,3 +102,82 @@ void Hotel::bookRoom() {
     cin.get();
     fout.close();
 }
+// Function to display customer records
+void Hotel::displayRecords() {
+    ifstream fin("Record.csv");
+    int r, flag;
+    cout << "\n Enter room no: ";
+    cin >> r;
+    string line;
+
+    while (getline(fin, line)) {
+        stringstream ss(line);
+        string token;
+
+        getline(ss, token, ',');
+        roomNo = stoi(token);
+
+        getline(ss, name, ',');
+        getline(ss, address, ',');
+        getline(ss, phone, ',');
+
+        getline(ss, token, ',');
+        days = stoi(token);
+
+        getline(ss, token);
+        fare = stof(token);
+
+        if (roomNo == r) {
+            cout << "\n Customer Details";
+            cout << "\n ----------------";
+            cout << "\n Room no: " << roomNo;
+            cout << "\n Name: " << name;
+            cout << "\n Address: " << address;
+            cout << "\n Phone no: " << phone;
+            cout << "\n Days: " << days;
+            cout << "\n Total Fare: " << fare;
+            flag = 1;
+            break;
+        }
+    }
+    if (flag == 0)
+        cout << "\n Sorry Room no. not found or vacant....!!";
+    cout << "\n\n Press any key to continue....!!";
+    cin.ignore();
+    cin.get();
+    fin.close();
+}
+
+// Function to display allotted rooms
+void Hotel::displayAllottedRooms() {
+    ifstream fin("Record.csv");
+    cout << "\n\t\t\t    List Of Rooms Allotted";
+    cout << "\n\t\t\t    ----------------------";
+    string line;
+    while (getline(fin, line)) {
+        stringstream ss(line);
+        string token;
+
+        getline(ss, token, ',');
+        roomNo = stoi(token);
+
+        getline(ss, name, ',');
+        getline(ss, address, ',');
+        getline(ss, phone, ',');
+
+        getline(ss, token, ',');
+        days = stoi(token);
+
+        getline(ss, token);
+        fare = stof(token);
+
+        cout << "\n Room no: " << roomNo << "\n Name: " << name;
+        cout << "\n Address: " << address << "\n Phone: " << phone;
+        cout << "\n Days: " << days << "\n Total: " << fare;
+        cout << "\n**********************************";
+    }
+    cout << "\n\n\n\t\t\tPress any key to continue.....!!";
+    cin.ignore();
+    cin.get();
+    fin.close();
+}
