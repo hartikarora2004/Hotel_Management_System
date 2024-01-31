@@ -181,3 +181,30 @@ void Hotel::displayAllottedRooms() {
     cin.get();
     fin.close();
 }
+
+// Function to edit customer record
+void Hotel::editRecord() {
+    int choice, r;
+    cout << "\n EDIT MENU";
+    cout << "\n ---------";
+    cout << "\n\n 1.Modify Customer Record";
+    cout << "\n 2.Delete Customer Record";
+    cout << "\n Enter your choice: ";
+    cin >> choice;
+    cout << "\n Enter room no: ";
+    cin >> r;
+    switch (choice) {
+        case 1:
+            modifyRecord(r);
+            break;
+        case 2:
+            deleteRecord(r);
+            break;
+        default:
+            cout << "\n Wrong Choice.....!!";
+            break;
+    }
+    cout << "\n Press any key to continue....!!!";
+    cin.ignore();
+    cin.get();
+}
