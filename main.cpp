@@ -208,3 +208,79 @@ void Hotel::editRecord() {
     cin.ignore();
     cin.get();
 }
+
+// Function to check room status
+int Hotel::checkRoom(int r) {
+    ifstream fin("Record.csv");
+    string line;
+
+    while (getline(fin, line)) {
+        stringstream ss(line);
+        string token;
+
+        getline(ss, token, ',');
+        roomNo = stoi(token);
+
+        if (roomNo == r) {
+            fin.close();
+            return 1; // Room is already booked
+        }
+    }
+    fin.close();
+    return 0; // Room is vacant
+}
+
+// Function to modify customer record
+void Hotel::modifyRecord(int r) {
+    ifstream fin("Record.csv");
+    ofstream fout("temp.csv", ios::out | ios::app);
+
+    string line;
+    bool found = false;
+
+    while (getline(fin, line)) {
+        stringstream ss(line);
+        string token;
+
+        getline(ss, token, ',');
+        roomNo = stoi(token);
+
+        if (roomNo == r) {
+            found = true;
+
+            cout << "Modify Customer Details" << endl;
+            cout << "------------------------" << endl;
+
+            cout << "Name: ";
+            cin >> name;
+            cout << "Address: ";
+            cin >> address;
+            cout << "Phone No: ";
+            cin >> phone;
+            cout << "No of Days to Checkout: ";
+            cin >> days;
+            fare = days * 900; // Assuming default price per day is 900
+
+            fout << roomNo << ","
+                 << name << ","
+                 << address << ","
+                 << phone << ","
+                 << days << ","
+                 << fare << "\n";
+
+            cout << "\nRecord modified successfully!" << endl;
+        } else {
+            fout << line << endl;
+        }
+    }
+
+    if (!found) {
+        cout << "Record not found!" << endl;
+    }
+
+    fin.close();
+    fout.close();
+
+    remove("Record.csv");
+    rename("temp.csv", "Record.csv");
+}
