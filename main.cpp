@@ -284,3 +284,98 @@ void Hotel::modifyRecord(int r) {
     remove("Record.csv");
     rename("temp.csv", "Record.csv");
 }
+
+void Hotel::deleteRecord(int r) {
+    ifstream fin("Record.csv");
+    ofstream fout("temp.csv", ios::out | ios::app);
+
+    string line;
+    bool found = false;
+
+    while (getline(fin, line)) {
+        stringstream ss(line);
+        string token;
+
+        getline(ss, token, ',');
+        roomNo = stoi(token);
+
+        if (roomNo == r) {
+            found = true;
+            cout << "Record deleted successfully!" << endl;
+        } else {
+            fout << line << endl;
+        }
+    }
+
+    if (!found) {
+        cout << "Record not found!" << endl;
+    }
+
+    fin.close();
+    fout.close();
+
+    remove("Record.csv");
+    rename("temp.csv", "Record.csv");
+}
+
+void Hotel::readFromCSV() {
+    ifstream fin("Record.csv");
+
+    if (!fin.is_open()) {
+        cout << "Error opening file!" << endl;
+        return;
+    }
+
+    string line;
+    while (getline(fin, line)) {
+        stringstream ss(line);
+        string token;
+
+        getline(ss, token, ',');
+        roomNo = stoi(token);
+
+        getline(ss, name, ',');
+        getline(ss, address, ',');
+        getline(ss, phone, ',');
+
+        getline(ss, token, ',');
+        days = stoi(token);
+
+        getline(ss, token);
+        fare = stof(token);
+
+        // Displaying the read data
+        cout << "Room No: " << roomNo << endl;
+        cout << "Name: " << name << endl;
+        cout << "Address: " << address << endl;
+        cout << "Phone: " << phone << endl;
+        cout << "Days: " << days << endl;
+        cout << "Total Fare: " << fare << endl;
+        cout << "-----------------" << endl;
+    }
+
+    fin.close();
+}
+
+
+// Function to write data to CSV
+void Hotel::writeToCSV() {
+    ofstream file("Record.csv", ios::app);
+
+    file << roomNo << ","
+         << name << ","
+         << address << ","
+         << phone << ","
+         << days << ","
+         << fare << "\n";
+
+    file.close();
+}
+
+int main() {
+    Hotel h;
+    h.readFromCSV(); // Load data from CSV on startup
+    h.displayMenu();
+    h.writeToCSV(); // Save data to CSV before exiting
+    return 0;
+}
